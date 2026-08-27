@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz App</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f1f5f9;
+        }
+
+        .quiz-container {
+            width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        #question {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .option:hover {
+            background: #f5f5f5;
+        }
+
+        #nextBtn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        #nextBtn:hover {
+            background: #1d4ed8;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 28px;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="quiz-container">
+
+        <div class="top">
+            <span id="questionNumber">Question 1/5</span>
+            <span id="score">Score: 0</span>
+        </div>
+
+        <h2 id="question">
+            Question will appear here
+        </h2>
+
+        <div class="options" id="options">
+
+            <button class="option" id="option0">Option 0</button>
+            <button class="option" id="option1">Option 1</button>
+            <button class="option" id="option2">Option 2</button>
+            <button class="option" id="option3">Option 3</button>
+
+        </div>
+
+        <button id="nextBtn">Next</button>
+
+        <div id="result"></div>
+
+
+    </div>
+
+    <script>
+
+        const questionNumber = document.getElementById("questionNumber");
+        const score = document.getElementById("score");
+        const question = document.getElementById("question");
+        const options = document.querySelectorAll(".option")
+        // const options = document.getElementById("options");
+        const nextBtn = document.getElementById("nextBtn");
+        const result = document.getElementById("result");
+
+
+        let quizdata = [];
+
+        fetch("questions.json")
+            .then(response => response.json())
+            .then(data => {
+                console.log("data loaded successfuly", data)
+                quizdata = data;
+                algo()
+            })
+            .catch(error => console.error("ye kya ho gaya", error))
+
+        let scorejs = 0;
+
+        function algo() {
+            if (papaindex >= quizdata.length) {
+                result.innerText = `the quiz is finished and your score is :${scorejs}`
+                
+           
+
+            } else {
+                const total_questions = quizdata.length;
+
+
+                const currentquiz = quizdata[papaindex];
+
+                questionNumber.innerText = `Question ${currentquiz.question_no}/${total_questions}`;
+                question.innerText = currentquiz.question;
+                options.forEach((option, index) => {
+                    option.innerText = currentquiz.options[index];
+                    option.addEventListener('click', (e) => {
+                        console.log(option.innerText)
+                        if (option.innerText == currentquiz.answer) {
+                            scorejs = scorejs + 1;
+                            score.innerText = `Score: ${scorejs}`
+                        } else {
+                            papaindex++;
+                            algo()
+                        }
+
+                    })
+
+                });
+            }
+
+
+
+
+
+
+
+
+        }
+
+        let papaindex = 0;
+
+
+        nextBtn.addEventListener('click', () => {
+            papaindex = papaindex + 1;
+            algo();
+
+            console.log(papaindex)
+        })
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+[
+    {
+        "question_no": "1",
+        "question": "Which HTML tag is used to define an unordered list?",
+        "options": [
+            "<ol>",
+            "<ul>",
+            "<li>",
+            "<list>"
+        ],
+        "answer": "<ul>"
+    },
+    {
+        "question_no": "2",
+        "question": "What does CSS stand for?",
+        "options": [
+            "Computer Style Sheets",
+            "Cascading Style Sheets",
+            "Creative Style Sheets",
+            "Colorful Style Sheets"
+        ],
+        "answer": "Cascading Style Sheets"
+    },
+    {
+        "question_no": "3",
+        "question": "Which HTTP status code represents 'Not Found'?",
+        "options": [
+            "200",
+            "403",
+            "404",
+            "500"
+        ],
+        "answer": "404"
+    },
+    {
+        "question_no": "4",
+        "question": "Which character is used for single-line comments in JavaScript?",
+        "options": [
+            "//",
+            "<!-- -->",
+            "/* */",
+            "#"
+        ],
+        "answer": "//"
+    },
+    {
+        "question_no": "5",
+        "question": "Which data structure operates on a First-In, First-Out (FIFO) principle?",
+        "options": [
+            "Stack",
+            "Queue",
+            "Tree",
+            "Graph"
+        ],
+        "answer": "Queue"
+    },
+    {
+        "question_no": "6",
+        "question": "Which JavaScript method parses a JSON string into a JavaScript object?",
+        "options": [
+            "JSON.stringify()",
+            "JSON.parse()",
+            "JSON.toObject()",
+            "JSON.convert()"
+        ],
+        "answer": "JSON.parse()"
+    }
+   
+]
