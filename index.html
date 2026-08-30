@@ -84,6 +84,12 @@
             font-size: 28px;
             margin-top: 20px;
         }
+
+        .option.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
     </style>
 
 </head>
@@ -94,7 +100,7 @@
 
         <div class="top">
             <span id="questionNumber">Question 1/5</span>
-            <span id="score">Score: 0</span>
+
         </div>
 
         <h2 id="question">
@@ -118,7 +124,7 @@
     </div>
 
     <script>
-
+        console.log("is it working")
         const questionNumber = document.getElementById("questionNumber");
         const score = document.getElementById("score");
         const question = document.getElementById("question");
@@ -126,51 +132,75 @@
         // const options = document.getElementById("options");
         const nextBtn = document.getElementById("nextBtn");
         const result = document.getElementById("result");
+        
 
 
         let quizdata = [];
+        console.log(quizdata);
+        let total_questions;
+        let currentquiz;
+        let active;
+
 
         fetch("questions.json")
             .then(response => response.json())
             .then(data => {
                 console.log("data loaded successfuly", data)
                 quizdata = data;
+                console.log("data is is quizdata array", quizdata)
+                total_questions = quizdata.length;
                 algo()
+
             })
             .catch(error => console.error("ye kya ho gaya", error))
 
         let scorejs = 0;
+        let papaindex = 0;
+        console.log("hahahaha")
+        console.log(quizdata)
+
+        console.log(quizdata.length)
 
         function algo() {
             if (papaindex >= quizdata.length) {
                 result.innerText = `the quiz is finished and your score is :${scorejs}`
-                
-           
+                options.forEach(option => {
+                    option.style.display = "none";
+
+                });
+                question.style.display ='none'
+                questionNumber.style.display = 'none'
+                nextBtn.style.display = 'none'
+
+
+
 
             } else {
-                const total_questions = quizdata.length;
-
-
-                const currentquiz = quizdata[papaindex];
-
+                currentquiz = quizdata[papaindex];
                 questionNumber.innerText = `Question ${currentquiz.question_no}/${total_questions}`;
                 question.innerText = currentquiz.question;
                 options.forEach((option, index) => {
                     option.innerText = currentquiz.options[index];
-                    option.addEventListener('click', (e) => {
-                        console.log(option.innerText)
-                        if (option.innerText == currentquiz.answer) {
-                            scorejs = scorejs + 1;
-                            score.innerText = `Score: ${scorejs}`
-                        } else {
-                            papaindex++;
-                            algo()
-                        }
-
-                    })
-
                 });
+
             }
+
+        
+
+            options.forEach((option) => {
+                option.addEventListener('click', (e) => {
+                    console.log(e.target.innerText)
+                    active = e.target;
+                    active.classList.add('active');
+                    if (e.target.innerText == currentquiz.answer) {
+                        scorejs = scorejs + 1;
+                       
+                    } 
+
+                })
+
+
+            });
 
 
 
@@ -181,14 +211,12 @@
 
         }
 
-        let papaindex = 0;
 
 
         nextBtn.addEventListener('click', () => {
             papaindex = papaindex + 1;
             algo();
-
-            console.log(papaindex)
+            active.classList.remove('active');
         })
 
 
